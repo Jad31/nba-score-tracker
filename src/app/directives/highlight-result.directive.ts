@@ -14,6 +14,5 @@ export class HighlightResultDirective implements OnChanges {
     } else if (this.teamResult === 'lose') {
       this.el.nativeElement.style.backgroundColor = 'red';
     }
-    console.log(this.teamResult);
   }
 }

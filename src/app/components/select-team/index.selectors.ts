@@ -10,16 +10,28 @@ export const $selectTeamTeams = createSelector(
   $selectTeam,
   (state) => state.teams
 );
-export const $selectTeamConference = createSelector(
+export const $selectTeamDropdownTeams = createSelector(
   $selectTeam,
-  (state) => state.conference
+  (state) => state.dropdownTeams
 );
-export const $selectTeamDivision = createSelector(
+export const $selectTeamConferences = createSelector(
   $selectTeam,
-  (state) => state.division
+  (state) => state.conferences
+);
+export const $selectTeamDivisions = createSelector(
+  $selectTeam,
+  (state) => state.divisions
+);
+export const $selectTeamSelectedConference = createSelector(
+  $selectTeam,
+  (state) => state.selectedConference
+);
+export const $selectTeamSelectedDivision = createSelector(
+  $selectTeam,
+  (state) => state.selectedDivision
 );
 
-export const $selectTeamTeam = createSelector(
+export const $selectTeamSelectedTeam = createSelector(
   $selectTeam,
-  (state) => state.team
+  (state) => state.selectedTeam
 );

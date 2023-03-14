@@ -6,8 +6,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ConferencePipe implements PipeTransform {
   transform(
-    value: 'East' | 'West'
-  ): 'Eastern Conference' | 'Western Conference' {
-    return value === 'East' ? 'Eastern Conference' : 'Western Conference';
+    value: '' | 'East' | 'West'
+  ): '' | 'Eastern Conference' | 'Western Conference' {
+    return value === ''
+      ? ''
+      : value === 'East'
+      ? 'Eastern Conference'
+      : 'Western Conference';
   }
 }

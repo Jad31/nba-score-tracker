@@ -1,10 +1,11 @@
 import { createReducer, on } from '@ngrx/store';
 import produce from 'immer';
 import {
-  µConferenceDrowpdownSelectionChangedSuccessEvent,
-  µDivisionDrowpdownSelectionChangedSuccessEvent,
+  µConferenceDropdownSelectionChanged,
+  µDivisionDropdownSelectionChanged,
   µLoadNbaTeamsSuccessEvent,
-  µTeamDrowpdownSelectionChangedSuccessEvent,
+  µTeamDropdownSelectionChanged,
+  µTrackTeamButtonClickedSuccessEvent,
 } from './index.actions';
 import { SelectTeamState, selectTeamStates } from './index.state';
 
@@ -16,30 +17,64 @@ export const selectTeamReducer = createReducer(
     (state, { cfgs }): SelectTeamState =>
       produce(state, (draft) => {
         draft.teams = cfgs.teams;
+        draft.dropdownTeams = cfgs.teams;
         return draft;
       })
   ),
   on(
-    µConferenceDrowpdownSelectionChangedSuccessEvent,
+    µConferenceDropdownSelectionChanged,
     (state, { cfgs }): SelectTeamState =>
       produce(state, (draft) => {
-        draft.conference = cfgs.conference;
+        draft.selectedConference = cfgs.conference;
+        if (cfgs.conference === 'East') {
+          draft.divisions = ['Atlantic', 'Central', 'Southeast'];
+        } else if (cfgs.conference === 'West') {
+          draft.divisions = ['Northwest', 'Pacific', 'Southwest'];
+        } else {
+          draft.divisions = [
+            '',
+            'Atlantic',
+            'Central',
+            'Southeast',
+            'Northwest',
+            'Pacific',
+            'Southwest',
+          ];
+        }
+        if (cfgs.conference === '') {
+          draft.dropdownTeams = draft.teams;
+        } else {
+          draft.dropdownTeams = draft.teams.filter((team) => {
+            return team.conference === cfgs.conference;
+          });
+        }
         return draft;
       })
   ),
   on(
-    µDivisionDrowpdownSelectionChangedSuccessEvent,
+    µDivisionDropdownSelectionChanged,
     (state, { cfgs }): SelectTeamState =>
       produce(state, (draft) => {
-        draft.division = cfgs.division;
+        draft.selectedDivision = cfgs.division;
+        draft.dropdownTeams = draft.teams.filter((team) => {
+          return team.division === cfgs.division;
+        });
         return draft;
       })
   ),
   on(
-    µTeamDrowpdownSelectionChangedSuccessEvent,
+    µTeamDropdownSelectionChanged,
     (state, { cfgs }): SelectTeamState =>
       produce(state, (draft) => {
-        draft.team = cfgs.team;
+        draft.selectedTeam = cfgs.team;
+        return draft;
+      })
+  ),
+  on(
+    µTrackTeamButtonClickedSuccessEvent,
+    (state, { cfgs }): SelectTeamState =>
+      produce(state, (draft) => {
+        draft.gamesResults = [...draft.gamesResults, cfgs.gameResult];
         return draft;
       })
   )

@@ -9,10 +9,7 @@ import {
   rapidApiKeys,
   rapidBaseUrl,
 } from '../../environments/environment';
-import {
-  getPastDates,
-  retrieveNbaGameResult,
-} from './free-nba-api.service.helpers';
+import { getPastDates, retrieveNbaGameResult } from '../utils/utils';
 
 @Injectable({
   providedIn: 'root',

@@ -1,19 +1,22 @@
 import { createAction, props } from '@ngrx/store';
 import {
-  ConferenceDrowpdownSelectionChangedCfgs,
-  ConferenceDrowpdownSelectionChangedFailureEventCfgs,
-  ConferenceDrowpdownSelectionChangedSuccessEventCfgs,
-  DivisionDrowpdownSelectionChangedCfgs,
-  DivisionDrowpdownSelectionChangedFailureEventCfgs,
-  DivisionDrowpdownSelectionChangedSuccessEventCfgs,
+  ConferenceDropdownSelectionChangedCfgs,
+  ConferenceDropdownSelectionChangedFailureEventCfgs,
+  ConferenceDropdownSelectionChangedSuccessEventCfgs,
+  DivisionDropdownSelectionChangedCfgs,
+  DivisionDropdownSelectionChangedFailureEventCfgs,
+  DivisionDropdownSelectionChangedSuccessEventCfgs,
   LoadNbaTeamsFailureEventCfgs,
   LoadNbaTeamsSuccessEventCfgs,
   SelectTeamComponentNgOnDestroyEnteredCfgs,
   SelectTeamComponentNgOnInitEnteredCfgs,
   SelectTeamEffectsNgOnInitEffectsEnteredCfgs,
-  TeamDrowpdownSelectionChangedCfgs,
-  TeamDrowpdownSelectionChangedFailureEventCfgs,
-  TeamDrowpdownSelectionChangedSuccessEventCfgs,
+  TeamDropdownSelectionChangedCfgs,
+  TeamDropdownSelectionChangedFailureEventCfgs,
+  TeamDropdownSelectionChangedSuccessEventCfgs,
+  TrackTeamButtonClickedCfgs,
+  TrackTeamButtonClickedSuccessEventCfgs,
+  TrackTeamButtonClickedFailureEventCfgs,
 } from './index.actions.types';
 
 //#region Lifecycles
@@ -33,7 +36,6 @@ export const µSelectTeamEffectsNgOnInitEffectsEntered = createAction(
 );
 //#endregion Lifecycles
 
-//#region Teams
 export const µLoadNbaTeams = createAction('[SelectTeamComponent] loadNbaTeams');
 
 export const µLoadNbaTeamsSuccessEvent = createAction(
@@ -46,48 +48,62 @@ export const µLoadNbaTeamsFailureEvent = createAction(
   props<{ cfgs: LoadNbaTeamsFailureEventCfgs }>()
 );
 
-export const µConferenceDrowpdownSelectionChanged = createAction(
-  '[SelectTeamComponent] conferenceDrowpdownSelectionChanged',
-  props<{ cfgs: ConferenceDrowpdownSelectionChangedCfgs }>()
+export const µConferenceDropdownSelectionChanged = createAction(
+  '[SelectTeamComponent] conferenceDropdownSelectionChanged',
+  props<{ cfgs: ConferenceDropdownSelectionChangedCfgs }>()
 );
 
-export const µConferenceDrowpdownSelectionChangedSuccessEvent = createAction(
-  '[SelectTeamComponent] conferenceDrowpdownSelectionChanged success event',
-  props<{ cfgs: ConferenceDrowpdownSelectionChangedSuccessEventCfgs }>()
+export const µConferenceDropdownSelectionChangedSuccessEvent = createAction(
+  '[SelectTeamComponent] conferenceDropdownSelectionChanged success event',
+  props<{ cfgs: ConferenceDropdownSelectionChangedSuccessEventCfgs }>()
 );
 
-export const µConferenceDrowpdownSelectionChangedFailureEvent = createAction(
-  '[SelectTeamComponent] conferenceDrowpdownSelectionChanged failure event',
-  props<{ cfgs: ConferenceDrowpdownSelectionChangedFailureEventCfgs }>()
+export const µConferenceDropdownSelectionChangedFailureEvent = createAction(
+  '[SelectTeamComponent] conferenceDropdownSelectionChanged failure event',
+  props<{ cfgs: ConferenceDropdownSelectionChangedFailureEventCfgs }>()
 );
 
-export const µDivisionDrowpdownSelectionChanged = createAction(
-  '[SelectTeamComponent] divisionDrowpdownSelectionChanged',
-  props<{ cfgs: DivisionDrowpdownSelectionChangedCfgs }>()
+export const µDivisionDropdownSelectionChanged = createAction(
+  '[SelectTeamComponent] divisionDropdownSelectionChanged',
+  props<{ cfgs: DivisionDropdownSelectionChangedCfgs }>()
 );
 
-export const µDivisionDrowpdownSelectionChangedSuccessEvent = createAction(
-  '[SelectTeamComponent] divisionDrowpdownSelectionChanged success event',
-  props<{ cfgs: DivisionDrowpdownSelectionChangedSuccessEventCfgs }>()
+export const µDivisionDropdownSelectionChangedSuccessEvent = createAction(
+  '[SelectTeamComponent] divisionDropdownSelectionChanged success event',
+  props<{ cfgs: DivisionDropdownSelectionChangedSuccessEventCfgs }>()
 );
 
-export const µDivisionDrowpdownSelectionChangedFailureEvent = createAction(
-  '[SelectTeamComponent] divisionDrowpdownSelectionChanged failure event',
-  props<{ cfgs: DivisionDrowpdownSelectionChangedFailureEventCfgs }>()
+export const µDivisionDropdownSelectionChangedFailureEvent = createAction(
+  '[SelectTeamComponent] divisionDropdownSelectionChanged failure event',
+  props<{ cfgs: DivisionDropdownSelectionChangedFailureEventCfgs }>()
 );
 
-export const µTeamDrowpdownSelectionChanged = createAction(
-  '[SelectTeamComponent] teamDrowpdownSelectionChanged',
-  props<{ cfgs: TeamDrowpdownSelectionChangedCfgs }>()
+export const µTeamDropdownSelectionChanged = createAction(
+  '[SelectTeamComponent] teamDropdownSelectionChanged',
+  props<{ cfgs: TeamDropdownSelectionChangedCfgs }>()
 );
 
-export const µTeamDrowpdownSelectionChangedSuccessEvent = createAction(
-  '[SelectTeamComponent] teamDrowpdownSelectionChanged success event',
-  props<{ cfgs: TeamDrowpdownSelectionChangedSuccessEventCfgs }>()
+export const µTeamDropdownSelectionChangedSuccessEvent = createAction(
+  '[SelectTeamComponent] teamDropdownSelectionChanged success event',
+  props<{ cfgs: TeamDropdownSelectionChangedSuccessEventCfgs }>()
 );
 
-export const µTeamDrowpdownSelectionChangedFailureEvent = createAction(
-  '[SelectTeamComponent] teamDrowpdownSelectionChanged failure event',
-  props<{ cfgs: TeamDrowpdownSelectionChangedFailureEventCfgs }>()
+export const µTeamDropdownSelectionChangedFailureEvent = createAction(
+  '[SelectTeamComponent] teamDropdownSelectionChanged failure event',
+  props<{ cfgs: TeamDropdownSelectionChangedFailureEventCfgs }>()
 );
-//#endregion Teams
+
+export const µTrackTeamButtonClicked = createAction(
+  '[SelectTeamComponent] trackTeamButtonClicked',
+  props<{ cfgs: TrackTeamButtonClickedCfgs }>()
+);
+
+export const µTrackTeamButtonClickedSuccessEvent = createAction(
+  '[SelectTeamComponent] trackTeamButtonClicked success event',
+  props<{ cfgs: TrackTeamButtonClickedSuccessEventCfgs }>()
+);
+
+export const µTrackTeamButtonClickedFailureEvent = createAction(
+  '[SelectTeamComponent] trackTeamButtonClicked failure event',
+  props<{ cfgs: TrackTeamButtonClickedFailureEventCfgs }>()
+);

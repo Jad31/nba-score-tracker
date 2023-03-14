@@ -1,0 +1,14 @@
+<ng-container
+  *ngIf="{
+    teamResults: teamResults$ | async
+  } as _"
+>
+  <div class="grid">
+    <div fxFlex="25%" class="card" *ngFor="let teamResult of _.teamResults">
+      <app-team-card
+        [teamResult]="teamResult"
+        (toRemove)="removeResult($event)"
+      ></app-team-card>
+    </div>
+  </div>
+</ng-container>

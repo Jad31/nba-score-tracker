@@ -1,13 +1,48 @@
 <ng-container
   *ngIf="{
-    teamResults: teamResults$ | async,
-    selectTeam: selectTeam$ | async
+    selectTeam: selectTeam$ | async,
+    selectConference: selectConference$ | async,
+    selectDivision: selectDivision$ | async
   } as _"
 >
   <div class="select-team">
     <mat-form-field appearance="fill">
+      <mat-label>Select a Conference:</mat-label>
+      <mat-select
+        id="conferenceSelect"
+        [(value)]="selectedConference"
+        (valueChange)="ConferenceDropdownSelectionChanged($event)"
+      >
+        <mat-option
+          *ngFor="let nbaConferences of _.selectConference"
+          [value]="nbaConferences"
+        >
+          {{ nbaConferences | conference }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Select a Division:</mat-label>
+      <mat-select
+        id="divisionSelect"
+        [(value)]="selectedDivision"
+        (valueChange)="DivisionDropdownSelectionChanged($event)"
+      >
+        <mat-option
+          *ngFor="let nbaDivision of _.selectDivision"
+          [value]="nbaDivision"
+        >
+          {{ nbaDivision }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
       <mat-label>Select an NBA Team:</mat-label>
-      <mat-select id="teamSelect" [(value)]="selectedTeam">
+      <mat-select
+        id="teamSelect"
+        [(value)]="selectedTeam"
+        (valueChange)="TeamDropdownSelectionChanged($event)"
+      >
         <mat-option
           *ngFor="let nbaTeam of _.selectTeam"
           [value]="nbaTeam.full_name"
@@ -30,7 +65,7 @@
   </div>
 
   <div class="grid">
-    <div fxFlex="25%" class="card" *ngFor="let teamResult of _.teamResults">
+    <div fxFlex="25%" class="card" *ngFor="let teamResult of teamResults">
       <app-team-card
         [teamResult]="teamResult"
         (toRemove)="removeResult($event)"
