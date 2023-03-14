@@ -1,13 +1,16 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FreeNbaApiService } from 'src/app/services/free-nba-api.service';
 import { MatSelectModule } from '@angular/material/select';
 import { NbaTeam } from 'src/app/models/nba-team.model';
-import { Observable, Subscription, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { TeamCardComponent } from '../team-card/team-card.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { NbaGamesResult } from 'src/app/models/nba-game.model';
+import { Store } from '@ngrx/store';
+import { µLoadNbaTeams } from './index.actions';
+import { $selectTeamTeams } from './index.selectors';
 
 @Component({
   selector: 'app-select-team',
@@ -23,20 +26,26 @@ import { NbaGamesResult } from 'src/app/models/nba-game.model';
   ],
 })
 export class SelectTeamComponent implements OnInit {
-  nbaTeams$: Observable<NbaTeam[]> | undefined;
   selectedTeam: string = '';
   teamResults$: Observable<NbaGamesResult[]> | undefined;
+  selectTeam$ = this.store.select($selectTeamTeams);
 
-  constructor(private freeNbaApiService: FreeNbaApiService) {}
+  constructor(
+    private freeNbaApiService: FreeNbaApiService,
+    private store: Store
+  ) {}
 
   ngOnInit(): void {
-    this.nbaTeams$ = this.freeNbaApiService.getNbaTeams();
     this.teamResults$ = this.freeNbaApiService.gamesResult$;
+    this.store.dispatch(µLoadNbaTeams());
+    this.selectTeam$.subscribe((teams) => {
+      console.log({ teams });
+    });
   }
 
   trackTeam(): void {
-    if (this.selectedTeam !== '' && this.nbaTeams$ !== undefined) {
-      this.nbaTeams$
+    if (this.selectedTeam !== '' && this.selectTeam$ !== undefined) {
+      this.selectTeam$
         .pipe(
           tap((teams) => {
             const team = teams.find(

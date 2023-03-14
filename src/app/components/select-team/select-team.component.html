@@ -1,7 +1,7 @@
 <ng-container
   *ngIf="{
     teamResults: teamResults$ | async,
-    nbaTeams: nbaTeams$ | async
+    selectTeam: selectTeam$ | async
   } as _"
 >
   <div class="select-team">
@@ -9,7 +9,7 @@
       <mat-label>Select an NBA Team:</mat-label>
       <mat-select id="teamSelect" [(value)]="selectedTeam">
         <mat-option
-          *ngFor="let nbaTeam of _.nbaTeams"
+          *ngFor="let nbaTeam of _.selectTeam"
           [value]="nbaTeam.full_name"
         >
           {{ nbaTeam.full_name }}

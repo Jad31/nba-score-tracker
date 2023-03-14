@@ -3,10 +3,19 @@ import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter, Route } from '@angular/router';
-import { StoreModule } from '@ngrx/store';
+import { EffectsModule, provideEffects } from '@ngrx/effects';
+import { routerReducer } from '@ngrx/router-store';
+import { provideStore, StoreModule } from '@ngrx/store';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { AppComponent } from './app/app.component';
-import { GamesResultsComponent } from './app/components/games-results/games-results.component';
+import { SelectTeamEffects } from './app/components/select-team/index.effects';
+import { selectTeamReducer } from './app/components/select-team/index.reducer';
 import { SelectTeamComponent } from './app/components/select-team/select-team.component';
+import {
+  provideFeatureEffects,
+  provideRouterStore,
+  provideStoreFeature,
+} from './app/standalone-ngrx';
 
 import { environment } from './environments/environment';
 
@@ -21,14 +30,21 @@ const routes: Route[] = [
   },
   {
     path: 'results/:teamCode',
-    component: GamesResultsComponent,
+    loadComponent: () =>
+      import('./app/components/games-results/games-results.component').then(
+        (c) => c.GamesResultsComponent
+      ),
   },
 ];
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
-    importProvidersFrom(BrowserAnimationsModule, StoreModule.forRoot()),
+    importProvidersFrom(BrowserAnimationsModule),
+    provideStore({ router: routerReducer, selectTeam: selectTeamReducer }),
+    provideRouterStore(),
+    provideStoreDevtools(),
+    provideEffects([SelectTeamEffects]),
     provideHttpClient(),
   ],
 });
