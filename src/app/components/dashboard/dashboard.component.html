@@ -1,14 +1,6 @@
-<ng-container
-  *ngIf="{
-    teamResults: teamResults$ | async
-  } as _"
->
-  <div class="grid">
-    <div fxFlex="25%" class="card" *ngFor="let teamResult of _.teamResults">
-      <app-team-card
-        [teamResult]="teamResult"
-        (toRemove)="removeResult($event)"
-      ></app-team-card>
-    </div>
+<app-select-team></app-select-team>
+<div class="grid">
+  <div fxFlex="25%" class="card" *ngFor="let teamResult of teamResults">
+    <app-team-card [teamResult]="teamResult"></app-team-card>
   </div>
-</ng-container>
+</div>

@@ -3,19 +3,19 @@ import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter, Route } from '@angular/router';
-import { EffectsModule, provideEffects } from '@ngrx/effects';
+import { provideEffects } from '@ngrx/effects';
 import { routerReducer } from '@ngrx/router-store';
-import { provideStore, StoreModule } from '@ngrx/store';
+import { provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { AppComponent } from './app/app.component';
+import { DashboardComponent } from './app/components/dashboard/dashboard.component';
+import { DashboardEffects } from './app/components/dashboard/index.effects';
+import { dashboardReducer } from './app/components/dashboard/index.reducer';
 import { SelectTeamEffects } from './app/components/select-team/index.effects';
 import { selectTeamReducer } from './app/components/select-team/index.reducer';
-import { SelectTeamComponent } from './app/components/select-team/select-team.component';
-import {
-  provideFeatureEffects,
-  provideRouterStore,
-  provideStoreFeature,
-} from './app/standalone-ngrx';
+import { TeamCardEffects } from './app/components/team-card/index.effects';
+import { teamCardReducer } from './app/components/team-card/index.reducer';
+import { provideRouterStore } from './app/standalone-ngrx';
 
 import { environment } from './environments/environment';
 
@@ -26,7 +26,7 @@ if (environment.production) {
 const routes: Route[] = [
   {
     path: '',
-    component: SelectTeamComponent,
+    component: DashboardComponent,
   },
   {
     path: 'results/:teamCode',
@@ -41,10 +41,15 @@ bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
     importProvidersFrom(BrowserAnimationsModule),
-    provideStore({ router: routerReducer, selectTeam: selectTeamReducer }),
+    provideStore({
+      router: routerReducer,
+      selectTeam: selectTeamReducer,
+      dashboard: dashboardReducer,
+      teamCard: teamCardReducer,
+    }),
     provideRouterStore(),
     provideStoreDevtools(),
-    provideEffects([SelectTeamEffects]),
+    provideEffects([SelectTeamEffects, DashboardEffects, TeamCardEffects]),
     provideHttpClient(),
   ],
 });

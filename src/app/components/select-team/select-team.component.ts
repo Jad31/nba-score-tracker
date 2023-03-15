@@ -54,7 +54,6 @@ export class SelectTeamComponent implements OnInit {
   selectedDivision: string | undefined;
   selectedTeam: '' | Team | undefined;
   selectTeam$ = this.store.select($selectTeamDropdownTeams);
-  teamResults: NbaGamesResult[] | undefined;
 
   constructor(
     private freeNbaApiService: FreeNbaApiService,
@@ -70,9 +69,7 @@ export class SelectTeamComponent implements OnInit {
       .subscribe((selectedConference) => {
         this.selectedConference = selectedConference;
       });
-    this.store.select($selectTeamGamesResults).subscribe((teamResults) => {
-      this.teamResults = teamResults;
-    });
+
     this.store
       .select($selectTeamSelectedDivision)
       .subscribe((selectedDivision) => {

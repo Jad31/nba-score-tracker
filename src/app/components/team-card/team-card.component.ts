@@ -1,14 +1,16 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { NbaGamesResult } from 'src/app/models/nba-game.model';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { HighlightResultDirective } from 'src/app/directives/highlight-result.directive';
-import { WinLossPipe } from 'src/app/pipes/win-loss.pipe';
+import { NbaGamesResult } from 'src/app/models/nba-game.model';
 import { ConferencePipe } from 'src/app/pipes/conference.pipe';
+import { WinLossPipe } from 'src/app/pipes/win-loss.pipe';
+import { µTeamCardRemoveButtonClicked } from './index.actions';
 
 @Component({
   selector: 'app-team-card',
@@ -29,11 +31,12 @@ import { ConferencePipe } from 'src/app/pipes/conference.pipe';
 })
 export class TeamCardComponent {
   @Input() teamResult: NbaGamesResult | undefined;
-  @Output() toRemove = new EventEmitter<string>();
+
+  constructor(private store: Store) {}
 
   removeTeamResult(uuid: string | undefined): void {
     if (uuid) {
-      this.toRemove.emit(uuid);
+      this.store.dispatch(µTeamCardRemoveButtonClicked({ cfgs: { uuid } }));
     }
   }
 }

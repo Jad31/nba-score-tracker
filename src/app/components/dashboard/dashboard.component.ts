@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { FreeNbaApiService } from 'src/app/services/free-nba-api.service';
-import { MatSelectModule } from '@angular/material/select';
-import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { TeamCardComponent } from '../team-card/team-card.component';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { NbaGamesResult } from 'src/app/models/nba-game.model';
+import { MatSelectModule } from '@angular/material/select';
 import { Store } from '@ngrx/store';
+import { NbaGamesResult } from 'src/app/models/nba-game.model';
+import { SelectTeamComponent } from '../select-team/select-team.component';
+import { TeamCardComponent } from '../team-card/team-card.component';
+import { $dashboardGamesResults } from './index.selectors';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,21 +20,17 @@ import { Store } from '@ngrx/store';
     MatButtonModule,
     TeamCardComponent,
     MatGridListModule,
+    SelectTeamComponent,
   ],
 })
-export class SelectTeamComponent implements OnInit {
-  teamResults$: Observable<NbaGamesResult[]> | undefined;
+export class DashboardComponent implements OnInit {
+  teamResults: NbaGamesResult[] | undefined;
 
-  constructor(
-    private freeNbaApiService: FreeNbaApiService,
-    private store: Store
-  ) {}
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
-    this.teamResults$ = this.freeNbaApiService.gamesResult$;
-  }
-
-  removeResult(uuid: string): void {
-    this.freeNbaApiService.removeTeamResult({ uuid });
+    this.store.select($dashboardGamesResults).subscribe((teamResults) => {
+      this.teamResults = teamResults;
+    });
   }
 }

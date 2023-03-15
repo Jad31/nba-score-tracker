@@ -63,13 +63,4 @@
       Track Team
     </button>
   </div>
-
-  <div class="grid">
-    <div fxFlex="25%" class="card" *ngFor="let teamResult of teamResults">
-      <app-team-card
-        [teamResult]="teamResult"
-        (toRemove)="removeResult($event)"
-      ></app-team-card>
-    </div>
-  </div>
 </ng-container>

@@ -47,40 +47,4 @@ export class SelectTeamEffects {
       )
     )
   );
-
-  readonly trackTeamButtonClickedEffect$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(µTrackTeamButtonClicked),
-      mergeMap(({ cfgs: { team } }) => {
-        const httpParams = new HttpParams({
-          fromObject: {
-            page: '0',
-            per_page: '12',
-            'team_ids[]': `${team.id}`,
-            'dates[]': getPastDates(),
-          },
-        });
-        return this.http
-          .get<{ data: NbaGame[] }>(`${rapidBaseUrl}/games`, {
-            headers: this.httpHeaders,
-            params: httpParams,
-          })
-          .pipe(
-            map(({ data }) => {
-              const gameResult: NbaGamesResult = retrieveNbaGameResult({
-                games: data,
-                team,
-                logoBaseUrl,
-              });
-              return µTrackTeamButtonClickedSuccessEvent({
-                cfgs: { gameResult },
-              });
-            }),
-            catchError((error) =>
-              of(µTrackTeamButtonClickedFailureEvent({ cfgs: { error } }))
-            )
-          );
-      })
-    )
-  );
 }

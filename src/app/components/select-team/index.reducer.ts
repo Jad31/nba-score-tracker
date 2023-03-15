@@ -69,13 +69,5 @@ export const selectTeamReducer = createReducer(
         draft.selectedTeam = cfgs.team;
         return draft;
       })
-  ),
-  on(
-    µTrackTeamButtonClickedSuccessEvent,
-    (state, { cfgs }): SelectTeamState =>
-      produce(state, (draft) => {
-        draft.gamesResults = [...draft.gamesResults, cfgs.gameResult];
-        return draft;
-      })
   )
 );
