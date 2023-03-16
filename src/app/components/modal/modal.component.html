@@ -1,5 +1,5 @@
 <div
-  class="fixed h-full w-full bottom-0 top-0 right-0 z-[100] transition-all duration-500 ease-in-out"
+  class="fixed h-full w-full bottom-0 top-0 right-0 z-[100]"
   [ngClass]="{
     'left-0': showModal,
     'opacity-1': showModal,
@@ -14,7 +14,7 @@
   <div
     class="modal-container max-h-full absolute h-fit bg-base-100 w-full md:top-1/2 md:right-1/2 md:-translate-y-1/2 md:translate-x-1/2 bottom-0 md:w-4/5 xl:w-fit mx-auto rounded shadow-lg z-[51] overflow-y-auto"
   >
-    <div class="modal-content py-4 text-left px-6">
+    <div class="modal-content">
       <ng-content></ng-content>
     </div>
   </div>

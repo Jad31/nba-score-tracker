@@ -28,9 +28,11 @@ export const selectTeamReducer = createReducer(
       produce(state, (draft) => {
         draft.selectedConference = cfgs.conference;
         if (cfgs.conference === 'East') {
-          draft.divisions = ['Atlantic', 'Central', 'Southeast'];
+          draft.divisions = ['', 'Atlantic', 'Central', 'Southeast'];
+          draft.selectedTeam = '';
         } else if (cfgs.conference === 'West') {
-          draft.divisions = ['Northwest', 'Pacific', 'Southwest'];
+          draft.selectedTeam = '';
+          draft.divisions = ['', 'Northwest', 'Pacific', 'Southwest'];
         } else {
           draft.divisions = [
             '',
