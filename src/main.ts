@@ -10,6 +10,8 @@ import { AppComponent } from './app/app.component';
 import { DashboardComponent } from './app/components/dashboard/dashboard.component';
 import { DashboardEffects } from './app/components/dashboard/index.effects';
 import { dashboardReducer } from './app/components/dashboard/index.reducer';
+import { GamesResultsEffects } from './app/components/games-results/index.effects';
+import { gamesResultsReducer } from './app/components/games-results/index.reducer';
 import { SelectTeamEffects } from './app/components/select-team/index.effects';
 import { selectTeamReducer } from './app/components/select-team/index.reducer';
 import { TeamCardEffects } from './app/components/team-card/index.effects';
@@ -44,10 +46,16 @@ bootstrapApplication(AppComponent, {
       selectTeam: selectTeamReducer,
       dashboard: dashboardReducer,
       teamCard: teamCardReducer,
+      gamesResults: gamesResultsReducer,
     }),
     provideRouterStore(),
     provideStoreDevtools(),
-    provideEffects([SelectTeamEffects, DashboardEffects, TeamCardEffects]),
+    provideEffects([
+      SelectTeamEffects,
+      DashboardEffects,
+      TeamCardEffects,
+      GamesResultsEffects,
+    ]),
     provideHttpClient(),
   ],
 });

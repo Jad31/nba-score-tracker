@@ -1,14 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FreeNbaApiService } from 'src/app/services/free-nba-api.service';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { NbaGamesResult } from 'src/app/models/nba-game.model';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { Subscription, tap } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { tap } from 'rxjs';
+import { NbaGamesResult } from 'src/app/models/nba-game.model';
 import { ConferencePipe } from 'src/app/pipes/conference.pipe';
+import { $dashboardGamesResults } from '../dashboard/index.selectors';
+import { µLoadGamesResultsConcurrentTeams } from './index.actions';
+import { $gamesResultsConcurrentTeams } from './index.selectors';
 
 @Component({
   selector: 'app-team-card',
@@ -26,32 +29,43 @@ import { ConferencePipe } from 'src/app/pipes/conference.pipe';
   styleUrls: ['./games-results.component.scss'],
 })
 export class GamesResultsComponent implements OnInit {
-  team: string;
+  teamCode: string;
   gameResults: NbaGamesResult | undefined;
   concurrentTeams: string[] = [];
 
-  constructor(
-    private route: ActivatedRoute,
-    private freeNbaApiService: FreeNbaApiService
-  ) {
-    this.team = this.route.snapshot.params['teamCode'];
+  constructor(private route: ActivatedRoute, private store: Store) {
+    this.teamCode = this.route.snapshot.params['teamCode'];
   }
 
   ngOnInit(): void {
-    this.freeNbaApiService.gamesResult$
+    this.store
+      .select($dashboardGamesResults)
       .pipe(
         tap((gameResults) => {
           this.gameResults = gameResults.find((gameResult) => {
-            return gameResult.team_abbreviation === this.team;
+            return gameResult.team_abbreviation === this.teamCode;
           });
         })
       )
       .subscribe();
+    console.log({ gameResults: this.gameResults });
     if (this.gameResults !== undefined) {
-      this.concurrentTeams = this.freeNbaApiService.getConcurrentTeams({
-        nbaGames: this.gameResults?.games,
-        teamName: this.team,
-      });
+      this.store.dispatch(
+        µLoadGamesResultsConcurrentTeams({
+          cfgs: {
+            nbaGames: this.gameResults.games,
+            teamName: this.teamCode,
+          },
+        })
+      );
+      this.store
+        .select($gamesResultsConcurrentTeams)
+        .pipe(
+          tap((concurrentTeams) => {
+            this.concurrentTeams = concurrentTeams;
+          })
+        )
+        .subscribe();
     }
     console.log(this.gameResults);
   }

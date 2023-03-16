@@ -1,4 +1,17 @@
 <ng-container *ngIf="teamResult !== undefined">
+  <app-modal [showModal]="showModal" (closeModal)="toggleModal()">
+    <h2>Are you sure you want to remove this team?</h2>
+    <div class="modal-actions">
+      <button
+        mat-stroked-button
+        color="warn"
+        (click)="removeTeamResult(teamResult.uuid)"
+      >
+        Yes
+      </button>
+      <button mat-stroked-button (click)="toggleModal()">No</button>
+    </div>
+  </app-modal>
   <mat-card>
     <mat-card-header>
       <mat-card-title-group>
@@ -10,7 +23,7 @@
             <button
               fxLayoutAlign="right"
               [id]="'remove' + teamResult.team_abbreviation"
-              (click)="removeTeamResult(teamResult.uuid)"
+              (click)="toggleModal()"
             >
               x
             </button>

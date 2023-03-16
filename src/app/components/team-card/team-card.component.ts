@@ -10,6 +10,7 @@ import { HighlightResultDirective } from 'src/app/directives/highlight-result.di
 import { NbaGamesResult } from 'src/app/models/nba-game.model';
 import { ConferencePipe } from 'src/app/pipes/conference.pipe';
 import { WinLossPipe } from 'src/app/pipes/win-loss.pipe';
+import { ModalComponent } from '../modal/modal.component';
 import { µTeamCardRemoveButtonClicked } from './index.actions';
 
 @Component({
@@ -25,6 +26,7 @@ import { µTeamCardRemoveButtonClicked } from './index.actions';
     WinLossPipe,
     HighlightResultDirective,
     ConferencePipe,
+    ModalComponent,
   ],
   templateUrl: './team-card.component.html',
   styleUrls: ['./team-card.component.scss'],
@@ -32,6 +34,7 @@ import { µTeamCardRemoveButtonClicked } from './index.actions';
 })
 export class TeamCardComponent {
   @Input() teamResult: NbaGamesResult | undefined;
+  showModal: boolean = false;
 
   constructor(private store: Store) {}
 
@@ -39,5 +42,9 @@ export class TeamCardComponent {
     if (uuid) {
       this.store.dispatch(µTeamCardRemoveButtonClicked({ cfgs: { uuid } }));
     }
+  }
+
+  toggleModal() {
+    this.showModal = !this.showModal;
   }
 }

@@ -7,7 +7,6 @@ import { Store } from '@ngrx/store';
 import { tap } from 'rxjs';
 import { Conference, Division, Team } from 'src/app/models/nba-team.model';
 import { ConferencePipe } from 'src/app/pipes/conference.pipe';
-import { FreeNbaApiService } from 'src/app/services/free-nba-api.service';
 import { TeamCardComponent } from '../team-card/team-card.component';
 import {
   µConferenceDropdownSelectionChanged,
@@ -47,10 +46,7 @@ export class SelectTeamComponent implements OnInit {
   selectedTeam: '' | Team | undefined;
   selectTeam$ = this.store.select($selectTeamDropdownTeams);
 
-  constructor(
-    private freeNbaApiService: FreeNbaApiService,
-    private store: Store
-  ) {}
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
     this.store.select($selectTeamSelectedTeam).subscribe((selectedTeam) => {
@@ -102,9 +98,5 @@ export class SelectTeamComponent implements OnInit {
         )
         .subscribe();
     }
-  }
-
-  removeResult(uuid: string): void {
-    this.freeNbaApiService.removeTeamResult({ uuid });
   }
 }
