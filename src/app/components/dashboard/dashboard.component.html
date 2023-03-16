@@ -1,6 +1,20 @@
-<app-select-team></app-select-team>
-<div class="grid">
-  <div fxFlex="25%" class="card" *ngFor="let teamResult of teamResults">
-    <app-team-card [teamResult]="teamResult"></app-team-card>
+<ng-container *ngIf="{ selectDays: selectDays$ | async } as _">
+  <app-select-team></app-select-team>
+  <mat-form-field appearance="fill">
+    <mat-label>Select a Conference:</mat-label>
+    <mat-select
+      id="conferenceSelect"
+      [(value)]="selectedDays"
+      (valueChange)="dashboardSelectedDaysChanged($event)"
+    >
+      <mat-option *ngFor="let selectDays of _.selectDays" [value]="selectDays">
+        {{ selectDays }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="grid">
+    <div fxFlex="25%" class="card" *ngFor="let teamResult of teamResults">
+      <app-team-card [teamResult]="teamResult"></app-team-card>
+    </div>
   </div>
-</div>
+</ng-container>

@@ -1,5 +1,6 @@
 import { Conference, NbaTeam } from './nba-team.model';
 
+export type Days = 6 | 12 | 20;
 export interface NbaGame {
   id: number;
   date: string;
@@ -18,6 +19,8 @@ export interface NbaGamesResult {
   uuid: string;
   team_name: string;
   team_abbreviation: string;
+  team_id: number;
+  team: NbaTeam;
   conference: Conference;
   games: NbaGame[];
   results: Array<'win' | 'lose'>;

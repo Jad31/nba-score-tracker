@@ -1,19 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { FreeNbaApiService } from 'src/app/services/free-nba-api.service';
-import { MatSelectModule } from '@angular/material/select';
-import {
-  Conference,
-  Division,
-  NbaTeam,
-  Team,
-} from 'src/app/models/nba-team.model';
-import { Observable, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { TeamCardComponent } from '../team-card/team-card.component';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { NbaGamesResult } from 'src/app/models/nba-game.model';
+import { MatSelectModule } from '@angular/material/select';
 import { Store } from '@ngrx/store';
+import { tap } from 'rxjs';
+import { Conference, Division, Team } from 'src/app/models/nba-team.model';
+import { ConferencePipe } from 'src/app/pipes/conference.pipe';
+import { FreeNbaApiService } from 'src/app/services/free-nba-api.service';
+import { TeamCardComponent } from '../team-card/team-card.component';
 import {
   µConferenceDropdownSelectionChanged,
   µDivisionDropdownSelectionChanged,
@@ -22,16 +17,13 @@ import {
   µTrackTeamButtonClicked,
 } from './index.actions';
 import {
-  $selectTeamGamesResults,
-  $selectTeamTeams,
-  $selectTeamSelectedConference,
-  $selectTeamSelectedDivision,
-  $selectTeamSelectedTeam,
   $selectTeamConferences,
   $selectTeamDivisions,
   $selectTeamDropdownTeams,
+  $selectTeamSelectedConference,
+  $selectTeamSelectedDivision,
+  $selectTeamSelectedTeam,
 } from './index.selectors';
-import { ConferencePipe } from 'src/app/pipes/conference.pipe';
 
 @Component({
   selector: 'app-select-team',
@@ -96,15 +88,14 @@ export class SelectTeamComponent implements OnInit {
     );
   }
 
-  trackTeam(): void {
-    if (this.selectedTeam !== '' && this.selectTeam$ !== undefined) {
+  trackTeam(selectedTeam: '' | Team | undefined): void {
+    if (selectedTeam !== '' && selectedTeam !== undefined) {
       this.selectTeam$
         .pipe(
           tap((teams) => {
-            const team = teams.find(
-              (team) => team.full_name === this.selectedTeam
-            );
+            const team = teams.find((team) => team.full_name === selectedTeam);
             if (team !== undefined) {
+              console.log({ team });
               this.store.dispatch(µTrackTeamButtonClicked({ cfgs: { team } }));
             }
           })

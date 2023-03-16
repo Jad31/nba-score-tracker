@@ -4,7 +4,6 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter, Route } from '@angular/router';
 import { provideEffects } from '@ngrx/effects';
-import { routerReducer } from '@ngrx/router-store';
 import { provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { AppComponent } from './app/app.component';
@@ -42,7 +41,6 @@ bootstrapApplication(AppComponent, {
     provideRouter(routes),
     importProvidersFrom(BrowserAnimationsModule),
     provideStore({
-      router: routerReducer,
       selectTeam: selectTeamReducer,
       dashboard: dashboardReducer,
       teamCard: teamCardReducer,

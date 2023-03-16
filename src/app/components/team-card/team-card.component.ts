@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
@@ -28,6 +28,7 @@ import { µTeamCardRemoveButtonClicked } from './index.actions';
   ],
   templateUrl: './team-card.component.html',
   styleUrls: ['./team-card.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TeamCardComponent {
   @Input() teamResult: NbaGamesResult | undefined;

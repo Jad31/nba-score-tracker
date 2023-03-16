@@ -1,14 +1,13 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { NbaTeam } from '../models/nba-team.model';
-import { BehaviorSubject, map } from 'rxjs';
-import { Observable } from 'rxjs';
-import { NbaGame, NbaGamesResult } from '../models/nba-game.model';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import {
   logoBaseUrl,
   rapidApiKeys,
   rapidBaseUrl,
 } from '../../environments/environment';
+import { NbaGame, NbaGamesResult } from '../models/nba-game.model';
+import { NbaTeam } from '../models/nba-team.model';
 import { getPastDates, retrieveNbaGameResult } from '../utils/utils';
 
 @Injectable({
@@ -39,7 +38,7 @@ export class FreeNbaApiService {
         page: '0',
         per_page: '12',
         'team_ids[]': `${team.id}`,
-        'dates[]': getPastDates(),
+        'dates[]': getPastDates({ days: 6 }),
       },
     });
     this.http

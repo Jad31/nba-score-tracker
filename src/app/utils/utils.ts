@@ -1,13 +1,13 @@
-import { startOfDay, subDays, format } from 'date-fns';
-import { NbaGame, NbaGamesResult } from '../models/nba-game.model';
+import { format, startOfDay, subDays } from 'date-fns';
 import { v4 as uuidv4 } from 'uuid';
+import { NbaGame, NbaGamesResult } from '../models/nba-game.model';
 import { NbaTeam } from '../models/nba-team.model';
 
-export function getPastDates(): string[] {
+export function getPastDates({ days }: { days: number }): string[] {
   const currentDate = startOfDay(new Date());
   const pastDays = [];
 
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < days; i++) {
     const pastDate = subDays(currentDate, i);
     const formattedDate = format(pastDate, 'yyyy-MM-dd');
     pastDays.push(formattedDate);
@@ -34,6 +34,8 @@ export function retrieveNbaGameResult({
     conference: team.conference,
     team_abbreviation: team.abbreviation,
     team_name: team.full_name,
+    team_id: team.id,
+    team,
   };
 
   let totalPointsScored = 0;

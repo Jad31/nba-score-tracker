@@ -3,6 +3,9 @@ import {
   DashboardComponentNgOnDestroyEnteredCfgs,
   DashboardComponentNgOnInitEnteredCfgs,
   DashboardEffectsNgOnInitEffectsEnteredCfgs,
+  DashboardSelectedDaysChangedCfgs,
+  DashboardSelectedDaysChangedFailureEventCfgs,
+  DashboardSelectedDaysChangedSuccessEventCfgs,
 } from './index.actions.types';
 
 //#region Lifecycles
@@ -21,3 +24,18 @@ export const µDashboardEffectsNgOnInitEffectsEntered = createAction(
   props<{ cfgs: DashboardEffectsNgOnInitEffectsEnteredCfgs }>()
 );
 //#endregion Lifecycles
+
+//#region Days
+export const µDashboardSelectedDaysChanged = createAction(
+  '[DashboardComponent] days changed',
+  props<{ cfgs: DashboardSelectedDaysChangedCfgs }>()
+);
+export const µDashboardSelectedDaysChangedSuccessEvent = createAction(
+  '[DashboardComponent] days changed success event',
+  props<{ cfgs: DashboardSelectedDaysChangedSuccessEventCfgs }>()
+);
+export const µDashboardSelectedDaysChangedFailureEvent = createAction(
+  '[DashboardComponent] days changed failure event',
+  props<{ cfgs: DashboardSelectedDaysChangedFailureEventCfgs }>()
+);
+//#endregion Days
