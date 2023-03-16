@@ -1,4 +1,3 @@
-import { NbaGamesResult } from '../../models/nba-game.model';
 import {
   Conference,
   Division,
@@ -7,7 +6,6 @@ import {
 } from '../../models/nba-team.model';
 
 export interface SelectTeamState {
-  gamesResults: NbaGamesResult[];
   teams: NbaTeam[];
   dropdownTeams: NbaTeam[];
   conferences: Array<'' | Conference>;
@@ -19,7 +17,6 @@ export interface SelectTeamState {
 
 export const selectTeamStates: Record<'initial', SelectTeamState> = {
   initial: {
-    gamesResults: [],
     teams: [],
     dropdownTeams: [],
     conferences: ['', 'East', 'West'],

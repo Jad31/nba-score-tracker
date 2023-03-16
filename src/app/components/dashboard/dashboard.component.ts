@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
 import { Store } from '@ngrx/store';
-import { Days, NbaGamesResult } from 'src/app/models/nba-game.model';
+import { Days } from 'src/app/models/nba-game.model';
 import { SelectTeamComponent } from '../select-team/select-team.component';
 import { TeamCardComponent } from '../team-card/team-card.component';
 import { µDashboardSelectedDaysChanged } from './index.actions';
@@ -27,19 +27,16 @@ import {
     MatGridListModule,
     SelectTeamComponent,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardComponent implements OnInit {
-  teamResults: NbaGamesResult[] | undefined;
+  teamResults$ = this.store.select($dashboardGamesResults);
   selectDays$ = this.store.select($dashboardDays);
   selectedDays: Days | undefined;
 
   constructor(private store: Store) {}
 
   ngOnInit(): void {
-    this.store.select($dashboardGamesResults).subscribe((teamResults) => {
-      console.log({ teamResults });
-      this.teamResults = teamResults;
-    });
     this.store.select($dashboardSelectedDay).subscribe((selectedDays) => {
       this.selectedDays = selectedDays;
     });
@@ -51,8 +48,5 @@ export class DashboardComponent implements OnInit {
         cfgs: { selectedDays },
       })
     );
-    this.store.select($dashboardGamesResults).subscribe((teamResults) => {
-      this.teamResults = teamResults;
-    });
   }
 }

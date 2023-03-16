@@ -16,7 +16,9 @@ export const selectTeamReducer = createReducer(
     (state, { cfgs }): SelectTeamState =>
       produce(state, (draft) => {
         draft.teams = cfgs.teams;
-        draft.dropdownTeams = cfgs.teams;
+        if (draft.dropdownTeams.length === 0) {
+          draft.dropdownTeams = cfgs.teams;
+        }
         return draft;
       })
   ),

@@ -45,7 +45,6 @@ export class SelectTeamComponent implements OnInit {
   selectedDivision: string | undefined;
   selectedTeam: '' | Team | undefined;
   selectTeam$ = this.store.select($selectTeamDropdownTeams);
-
   constructor(private store: Store) {}
 
   ngOnInit(): void {
@@ -84,12 +83,14 @@ export class SelectTeamComponent implements OnInit {
     );
   }
 
-  trackTeam(selectedTeam: '' | Team | undefined): void {
-    if (selectedTeam !== '' && selectedTeam !== undefined) {
+  trackTeam(): void {
+    if (this.selectedTeam !== '' && this.selectedTeam !== undefined) {
       this.selectTeam$
         .pipe(
           tap((teams) => {
-            const team = teams.find((team) => team.full_name === selectedTeam);
+            const team = teams.find(
+              (team) => team.full_name === this.selectedTeam
+            );
             if (team !== undefined) {
               console.log({ team });
               this.store.dispatch(µTrackTeamButtonClicked({ cfgs: { team } }));
