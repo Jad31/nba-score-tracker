@@ -21,7 +21,7 @@ import {
 } from './index.actions';
 import {
   $dashboardGamesResults,
-  $dashboardSelectedDay,
+  $dashboardSelectedDays,
 } from './index.selectors';
 
 @Injectable()
@@ -39,7 +39,7 @@ export class DashboardEffects {
   readonly trackTeamButtonClickedEffect$ = createEffect(() =>
     this.actions$.pipe(
       ofType(µTrackTeamButtonClicked),
-      concatLatestFrom(() => this.store.select($dashboardSelectedDay)),
+      concatLatestFrom(() => this.store.select($dashboardSelectedDays)),
       mergeMap(
         ([
           {

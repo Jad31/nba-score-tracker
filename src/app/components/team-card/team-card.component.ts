@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { HighlightResultDirective } from 'src/app/directives/highlight-result.directive';
-import { NbaGamesResult } from 'src/app/models/nba-game.model';
+import { Days, NbaGamesResult } from 'src/app/models/nba-game.model';
 import { ConferencePipe } from 'src/app/pipes/conference.pipe';
 import { WinLossPipe } from 'src/app/pipes/win-loss.pipe';
 import { ModalComponent } from '../modal/modal.component';
@@ -34,6 +34,7 @@ import { µTeamCardRemoveButtonClicked } from './index.actions';
 })
 export class TeamCardComponent {
   @Input() teamResult: NbaGamesResult | undefined;
+  @Input() days: Days | undefined;
   showModal: boolean = false;
 
   constructor(private store: Store) {}

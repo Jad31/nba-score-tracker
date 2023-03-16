@@ -12,7 +12,7 @@ import { µDashboardSelectedDaysChanged } from './index.actions';
 import {
   $dashboardDays,
   $dashboardGamesResults,
-  $dashboardSelectedDay,
+  $dashboardSelectedDays,
 } from './index.selectors';
 
 @Component({
@@ -32,15 +32,15 @@ import {
 })
 export class DashboardComponent implements OnInit {
   teamResults$: Observable<NbaGamesResult[]> | undefined;
-  selectDays$: Observable<Days[]> | undefined;
+  days$: Observable<Days[]> | undefined;
   selectedDays$: Observable<Days> | undefined;
 
   constructor(private store: Store) {}
 
   ngOnInit(): void {
     this.teamResults$ = this.store.select($dashboardGamesResults);
-    this.selectDays$ = this.store.select($dashboardDays);
-    this.selectedDays$ = this.store.select($dashboardSelectedDay);
+    this.days$ = this.store.select($dashboardDays);
+    this.selectedDays$ = this.store.select($dashboardSelectedDays);
   }
 
   dashboardSelectedDaysChanged(selectedDays: Days) {

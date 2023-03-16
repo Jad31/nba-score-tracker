@@ -44,24 +44,24 @@ import {
   ],
 })
 export class SelectTeamComponent implements OnInit {
-  selectConference$: Observable<('' | Conference)[]> | undefined;
+  conferences$: Observable<('' | Conference)[]> | undefined;
   selectedConference$: Observable<string> | undefined;
-  selectDivision$: Observable<('' | Division)[]> | undefined;
+  divisions: Observable<('' | Division)[]> | undefined;
   selectedDivision$: Observable<string> | undefined;
   selectedTeam$: Observable<'' | Team> | undefined;
-  selectTeam$: Observable<NbaTeam[]> | undefined;
+  teams: Observable<NbaTeam[]> | undefined;
 
   constructor(private store: Store) {}
 
   ngOnInit(): void {
     this.store.dispatch(µLoadNbaTeams());
 
-    this.selectConference$ = this.store.select($selectTeamConferences);
+    this.conferences$ = this.store.select($selectTeamConferences);
     this.selectedConference$ = this.store.select($selectTeamSelectedConference);
     this.selectedDivision$ = this.store.select($selectTeamSelectedDivision);
-    this.selectDivision$ = this.store.select($selectTeamDivisions);
+    this.divisions = this.store.select($selectTeamDivisions);
     this.selectedTeam$ = this.store.select($selectTeamSelectedTeam);
-    this.selectTeam$ = this.store.select($selectTeamDropdownTeams);
+    this.teams = this.store.select($selectTeamDropdownTeams);
   }
 
   TeamDropdownSelectionChanged(event: Team): void {
@@ -82,12 +82,9 @@ export class SelectTeamComponent implements OnInit {
     );
   }
 
-  trackTeam(
-    selectedTeam: '' | Team | null,
-    selectTeam: NbaTeam[] | null
-  ): void {
-    if (selectedTeam !== '' && selectedTeam !== null && selectTeam !== null) {
-      const team = selectTeam.find((team) => team.full_name === selectedTeam);
+  trackTeam(selectedTeam: '' | Team | null, teams: NbaTeam[] | null): void {
+    if (selectedTeam !== '' && selectedTeam !== null && teams !== null) {
+      const team = teams.find((team) => team.full_name === selectedTeam);
       if (team !== undefined) {
         console.log({ team });
         this.store.dispatch(µTrackTeamButtonClicked({ cfgs: { team } }));

@@ -1,6 +1,6 @@
 <ng-container
   *ngIf="{
-    selectDays: selectDays$ | async,
+    selectDays: days$ | async,
     teamResults: teamResults$ | async,
     selectedDays: selectedDays$ | async
   } as _"
@@ -20,7 +20,10 @@
   </mat-form-field>
   <div class="grid">
     <div fxFlex="25%" class="card" *ngFor="let teamResult of _.teamResults">
-      <app-team-card [teamResult]="teamResult"></app-team-card>
+      <app-team-card
+        [teamResult]="teamResult"
+        [days]="_.selectedDays ?? 12"
+      ></app-team-card>
     </div>
   </div>
 </ng-container>

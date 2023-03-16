@@ -1,11 +1,11 @@
 <ng-container
   *ngIf="{
-    selectConference: selectConference$ | async,
+    conferences: conferences$ | async,
     selectedConference: selectedConference$ | async,
     selectedDivision: selectedDivision$ | async,
-    selectDivision: selectDivision$ | async,
+    selectDivision: divisions | async,
     selectedTeam: selectedTeam$ | async,
-    selectTeam: selectTeam$ | async
+    selectTeam: teams | async
   } as _"
 >
   <div class="select-team">
@@ -17,7 +17,7 @@
         (valueChange)="ConferenceDropdownSelectionChanged($event)"
       >
         <mat-option
-          *ngFor="let nbaConferences of _.selectConference"
+          *ngFor="let nbaConferences of _.conferences"
           [value]="nbaConferences"
         >
           {{ nbaConferences | conference }}

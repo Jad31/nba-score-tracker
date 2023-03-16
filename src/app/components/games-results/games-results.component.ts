@@ -6,10 +6,13 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { tap } from 'rxjs';
-import { NbaGamesResult } from 'src/app/models/nba-game.model';
+import { Observable, tap } from 'rxjs';
+import { Days, NbaGamesResult } from 'src/app/models/nba-game.model';
 import { ConferencePipe } from 'src/app/pipes/conference.pipe';
-import { $dashboardGamesResults } from '../dashboard/index.selectors';
+import {
+  $dashboardGamesResults,
+  $dashboardSelectedDays,
+} from '../dashboard/index.selectors';
 import { µLoadGamesResultsConcurrentTeams } from './index.actions';
 import { $gamesResultsConcurrentTeams } from './index.selectors';
 
@@ -32,12 +35,14 @@ export class GamesResultsComponent implements OnInit {
   teamCode: string;
   gameResults: NbaGamesResult | undefined;
   concurrentTeams: string[] = [];
+  selectedDays$: Observable<Days> | undefined;
 
   constructor(private route: ActivatedRoute, private store: Store) {
     this.teamCode = this.route.snapshot.params['teamCode'];
   }
 
   ngOnInit(): void {
+    this.selectedDays$ = this.store.select($dashboardSelectedDays);
     this.store
       .select($dashboardGamesResults)
       .pipe(
