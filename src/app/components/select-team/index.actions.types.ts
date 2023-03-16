@@ -29,7 +29,7 @@ export interface ConferenceDropdownSelectionChangedFailureEventCfgs {
   conference: Conference;
 }
 export interface DivisionDropdownSelectionChangedCfgs {
-  division: Division;
+  division: '' | Division;
 }
 export interface DivisionDropdownSelectionChangedSuccessEventCfgs {
   division: Division;

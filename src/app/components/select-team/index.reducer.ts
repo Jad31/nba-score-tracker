@@ -42,6 +42,8 @@ export const selectTeamReducer = createReducer(
         }
         if (cfgs.conference === '') {
           draft.dropdownTeams = draft.teams;
+          draft.selectedDivision = '';
+          draft.selectedTeam = '';
         } else {
           draft.dropdownTeams = draft.teams.filter((team) => {
             return team.conference === cfgs.conference;
@@ -55,7 +57,9 @@ export const selectTeamReducer = createReducer(
     (state, { cfgs }): SelectTeamState =>
       produce(state, (draft) => {
         draft.selectedDivision = cfgs.division;
-        draft.dropdownTeams = draft.teams;
+        if (cfgs.division === '') {
+          draft.dropdownTeams = draft.teams;
+        }
         draft.dropdownTeams = draft.teams.filter((team) => {
           return team.division === cfgs.division;
         });
