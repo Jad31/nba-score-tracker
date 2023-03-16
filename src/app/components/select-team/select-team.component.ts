@@ -4,8 +4,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
 import { Store } from '@ngrx/store';
-import { tap } from 'rxjs';
-import { Conference, Division, Team } from 'src/app/models/nba-team.model';
+import { Observable } from 'rxjs';
+import {
+  Conference,
+  Division,
+  NbaTeam,
+  Team,
+} from 'src/app/models/nba-team.model';
 import { ConferencePipe } from 'src/app/pipes/conference.pipe';
 import { TeamCardComponent } from '../team-card/team-card.component';
 import {
@@ -39,30 +44,24 @@ import {
   ],
 })
 export class SelectTeamComponent implements OnInit {
-  selectConference$ = this.store.select($selectTeamConferences);
-  selectedConference: string | undefined;
-  selectDivision$ = this.store.select($selectTeamDivisions);
-  selectedDivision: string | undefined;
-  selectedTeam: '' | Team | undefined;
-  selectTeam$ = this.store.select($selectTeamDropdownTeams);
+  selectConference$: Observable<('' | Conference)[]> | undefined;
+  selectedConference$: Observable<string> | undefined;
+  selectDivision$: Observable<('' | Division)[]> | undefined;
+  selectedDivision$: Observable<string> | undefined;
+  selectedTeam$: Observable<'' | Team> | undefined;
+  selectTeam$: Observable<NbaTeam[]> | undefined;
+
   constructor(private store: Store) {}
 
   ngOnInit(): void {
-    this.store.select($selectTeamSelectedTeam).subscribe((selectedTeam) => {
-      this.selectedTeam = selectedTeam;
-    });
-    this.store
-      .select($selectTeamSelectedConference)
-      .subscribe((selectedConference) => {
-        this.selectedConference = selectedConference;
-      });
-
-    this.store
-      .select($selectTeamSelectedDivision)
-      .subscribe((selectedDivision) => {
-        this.selectedDivision = selectedDivision;
-      });
     this.store.dispatch(µLoadNbaTeams());
+
+    this.selectConference$ = this.store.select($selectTeamConferences);
+    this.selectedConference$ = this.store.select($selectTeamSelectedConference);
+    this.selectedDivision$ = this.store.select($selectTeamSelectedDivision);
+    this.selectDivision$ = this.store.select($selectTeamDivisions);
+    this.selectedTeam$ = this.store.select($selectTeamSelectedTeam);
+    this.selectTeam$ = this.store.select($selectTeamDropdownTeams);
   }
 
   TeamDropdownSelectionChanged(event: Team): void {
@@ -83,21 +82,16 @@ export class SelectTeamComponent implements OnInit {
     );
   }
 
-  trackTeam(): void {
-    if (this.selectedTeam !== '' && this.selectedTeam !== undefined) {
-      this.selectTeam$
-        .pipe(
-          tap((teams) => {
-            const team = teams.find(
-              (team) => team.full_name === this.selectedTeam
-            );
-            if (team !== undefined) {
-              console.log({ team });
-              this.store.dispatch(µTrackTeamButtonClicked({ cfgs: { team } }));
-            }
-          })
-        )
-        .subscribe();
+  trackTeam(
+    selectedTeam: '' | Team | null,
+    selectTeam: NbaTeam[] | null
+  ): void {
+    if (selectedTeam !== '' && selectedTeam !== null && selectTeam !== null) {
+      const team = selectTeam.find((team) => team.full_name === selectedTeam);
+      if (team !== undefined) {
+        console.log({ team });
+        this.store.dispatch(µTrackTeamButtonClicked({ cfgs: { team } }));
+      }
     }
   }
 }

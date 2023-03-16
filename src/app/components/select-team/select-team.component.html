@@ -1,8 +1,11 @@
 <ng-container
   *ngIf="{
-    selectTeam: selectTeam$ | async,
     selectConference: selectConference$ | async,
-    selectDivision: selectDivision$ | async
+    selectedConference: selectedConference$ | async,
+    selectedDivision: selectedDivision$ | async,
+    selectDivision: selectDivision$ | async,
+    selectedTeam: selectedTeam$ | async,
+    selectTeam: selectTeam$ | async
   } as _"
 >
   <div class="select-team">
@@ -10,7 +13,7 @@
       <mat-label>Select a Conference:</mat-label>
       <mat-select
         id="conferenceSelect"
-        [(value)]="selectedConference"
+        [(value)]="_.selectedConference"
         (valueChange)="ConferenceDropdownSelectionChanged($event)"
       >
         <mat-option
@@ -25,7 +28,7 @@
       <mat-label>Select a Division:</mat-label>
       <mat-select
         id="divisionSelect"
-        [(value)]="selectedDivision"
+        [(value)]="_.selectedDivision"
         (valueChange)="DivisionDropdownSelectionChanged($event)"
       >
         <mat-option
@@ -40,7 +43,7 @@
       <mat-label>Select an NBA Team:</mat-label>
       <mat-select
         id="teamSelect"
-        [(value)]="selectedTeam"
+        [(value)]="_.selectedTeam"
         (valueChange)="TeamDropdownSelectionChanged($event)"
       >
         <mat-option
@@ -57,8 +60,8 @@
       class="track-btn"
       mat-raised-button
       color="primary"
-      (click)="trackTeam()"
-      [disabled]="selectedTeam === ''"
+      (click)="trackTeam(_.selectedTeam, _.selectTeam)"
+      [disabled]="_.selectedTeam === ''"
     >
       Track Team
     </button>

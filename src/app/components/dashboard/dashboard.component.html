@@ -1,15 +1,16 @@
 <ng-container
   *ngIf="{
     selectDays: selectDays$ | async,
-    teamResults: teamResults$ | async
+    teamResults: teamResults$ | async,
+    selectedDays: selectedDays$ | async
   } as _"
 >
   <app-select-team></app-select-team>
-  <mat-form-field appearance="fill">
-    <mat-label>Select a Conference:</mat-label>
+  <mat-form-field style="margin-top: 10px" appearance="fill">
+    <mat-label>Days</mat-label>
     <mat-select
       id="conferenceSelect"
-      [(value)]="selectedDays"
+      [(value)]="_.selectedDays"
       (valueChange)="dashboardSelectedDaysChanged($event)"
     >
       <mat-option *ngFor="let selectDays of _.selectDays" [value]="selectDays">

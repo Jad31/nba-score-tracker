@@ -62,11 +62,16 @@ export const selectTeamReducer = createReducer(
       produce(state, (draft) => {
         draft.selectedDivision = cfgs.division;
         if (cfgs.division === '') {
-          draft.dropdownTeams = draft.teams;
+          draft.dropdownTeams = draft.teams.filter((team) => {
+            return team.conference === draft.selectedConference;
+          });
+          draft.selectedTeam = '';
+        } else {
+          draft.dropdownTeams = draft.teams.filter((team) => {
+            return team.division === cfgs.division;
+          });
+          draft.selectedTeam = '';
         }
-        draft.dropdownTeams = draft.teams.filter((team) => {
-          return team.division === cfgs.division;
-        });
         return draft;
       })
   ),
