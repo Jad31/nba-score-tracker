@@ -86,7 +86,6 @@ export class SelectTeamComponent implements OnInit {
     if (selectedTeam !== '' && selectedTeam !== null && teams !== null) {
       const team = teams.find((team) => team.full_name === selectedTeam);
       if (team !== undefined) {
-        console.log({ team });
         this.store.dispatch(µTrackTeamButtonClicked({ cfgs: { team } }));
       }
     }

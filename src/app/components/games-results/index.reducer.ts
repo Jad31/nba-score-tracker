@@ -17,7 +17,6 @@ export const gamesResultsReducer = createReducer(
             concurrentTeams.push(nbaGame.visitor_team.abbreviation);
           }
         });
-        console.log({ concurrentTeams });
         draft.concurrentTeams = concurrentTeams;
         return draft;
       })

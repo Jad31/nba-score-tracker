@@ -31,7 +31,6 @@ export class SelectTeamEffects {
               return µLoadNbaTeamsSuccessEvent({ cfgs: { teams: data } });
             }),
             catchError((error) => {
-              console.log({ error });
               return of(µLoadNbaTeamsFailureEvent({ cfgs: { error } }));
             })
           )

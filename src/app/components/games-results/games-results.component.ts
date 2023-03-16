@@ -53,7 +53,6 @@ export class GamesResultsComponent implements OnInit {
         })
       )
       .subscribe();
-    console.log({ gameResults: this.gameResults });
     if (this.gameResults !== undefined) {
       this.store.dispatch(
         µLoadGamesResultsConcurrentTeams({
@@ -72,6 +71,5 @@ export class GamesResultsComponent implements OnInit {
         )
         .subscribe();
     }
-    console.log(this.gameResults);
   }
 }

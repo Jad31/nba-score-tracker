@@ -40,7 +40,6 @@ export const dashboardReducer = createReducer(
     µDashboardSelectedDaysChangedSuccessEvent,
     (state, { cfgs }): DashboardState =>
       produce(state, (draft) => {
-        console.log({ cfgs });
         // update the gamesResults games that match the team_id
         draft.gamesResults = draft.gamesResults.map((gameResult) => {
           if (gameResult.team_name === cfgs.gameResults.team_name) {
