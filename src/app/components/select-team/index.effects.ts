@@ -1,22 +1,13 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, catchError, of, mergeMap } from 'rxjs';
-import { NbaGame, NbaGamesResult } from 'src/app/models/nba-game.model';
+import { catchError, map, mergeMap, of } from 'rxjs';
 import { NbaTeam } from 'src/app/models/nba-team.model';
-import { getPastDates, retrieveNbaGameResult } from 'src/app/utils/utils';
-import {
-  logoBaseUrl,
-  rapidApiKeys,
-  rapidBaseUrl,
-} from 'src/environments/environment';
+import { rapidApiKeys, rapidBaseUrl } from 'src/environments/environment';
 import {
   µLoadNbaTeams,
-  µLoadNbaTeamsSuccessEvent,
   µLoadNbaTeamsFailureEvent,
-  µTrackTeamButtonClicked,
-  µTrackTeamButtonClickedSuccessEvent,
-  µTrackTeamButtonClickedFailureEvent,
+  µLoadNbaTeamsSuccessEvent,
 } from './index.actions';
 
 @Injectable()

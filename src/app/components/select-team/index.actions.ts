@@ -8,33 +8,13 @@ import {
   DivisionDropdownSelectionChangedSuccessEventCfgs,
   LoadNbaTeamsFailureEventCfgs,
   LoadNbaTeamsSuccessEventCfgs,
-  SelectTeamComponentNgOnDestroyEnteredCfgs,
-  SelectTeamComponentNgOnInitEnteredCfgs,
-  SelectTeamEffectsNgOnInitEffectsEnteredCfgs,
   TeamDropdownSelectionChangedCfgs,
   TeamDropdownSelectionChangedFailureEventCfgs,
   TeamDropdownSelectionChangedSuccessEventCfgs,
   TrackTeamButtonClickedCfgs,
-  TrackTeamButtonClickedSuccessEventCfgs,
   TrackTeamButtonClickedFailureEventCfgs,
+  TrackTeamButtonClickedSuccessEventCfgs,
 } from './index.actions.types';
-
-//#region Lifecycles
-export const µSelectTeamComponentNgOnInitEntered = createAction(
-  '[SelectTeamComponent] ngOnInit entered',
-  props<{ cfgs: SelectTeamComponentNgOnInitEnteredCfgs }>()
-);
-
-export const µSelectTeamComponentNgOnDestroyEntered = createAction(
-  '[SelectTeamComponent] ngOnDestroy entered',
-  props<{ cfgs: SelectTeamComponentNgOnDestroyEnteredCfgs }>()
-);
-
-export const µSelectTeamEffectsNgOnInitEffectsEntered = createAction(
-  '[SelectTeamEffects] ngrxOnInitEffects entered',
-  props<{ cfgs: SelectTeamEffectsNgOnInitEffectsEnteredCfgs }>()
-);
-//#endregion Lifecycles
 
 export const µLoadNbaTeams = createAction('[SelectTeamComponent] loadNbaTeams');
 

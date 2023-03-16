@@ -6,12 +6,6 @@ import {
   Team,
 } from 'src/app/models/nba-team.model';
 
-//#region Lifecycles
-export type SelectTeamComponentNgOnInitEnteredCfgs = void;
-export type SelectTeamComponentNgOnDestroyEnteredCfgs = void;
-export type SelectTeamEffectsNgOnInitEffectsEnteredCfgs = void;
-//#endregion Lifecycles
-
 export type LoadNbaTeamsCfgs = void;
 export interface LoadNbaTeamsSuccessEventCfgs {
   teams: NbaTeam[];
