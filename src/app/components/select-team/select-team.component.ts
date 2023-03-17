@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import {
   Conference,
   Division,
@@ -16,7 +15,6 @@ import { TeamCardComponent } from '../team-card/team-card.component';
 import {
   µConferenceDropdownSelectionChanged,
   µDivisionDropdownSelectionChanged,
-  µLoadNbaTeams,
   µTeamDropdownSelectionChanged,
   µTrackTeamButtonClicked,
 } from './index.actions';
@@ -43,27 +41,15 @@ import {
     ConferencePipe,
   ],
 })
-export class SelectTeamComponent implements OnInit {
-  conferences$: Observable<('' | Conference)[]> | undefined;
-  selectedConference$: Observable<string> | undefined;
-  divisions: Observable<('' | Division)[]> | undefined;
-  selectedDivision$: Observable<string> | undefined;
-  selectedTeam$: Observable<'' | Team> | undefined;
-  teams: Observable<NbaTeam[]> | undefined;
+export class SelectTeamComponent {
+  conferences$ = this.store.select($selectTeamConferences);
+  selectedConference$ = this.store.select($selectTeamSelectedConference);
+  selectedDivision$ = this.store.select($selectTeamSelectedDivision);
+  divisions$ = this.store.select($selectTeamDivisions);
+  selectedTeam$ = this.store.select($selectTeamSelectedTeam);
+  teams$ = this.store.select($selectTeamDropdownTeams);
 
   constructor(private store: Store) {}
-
-  ngOnInit(): void {
-    this.store.dispatch(µLoadNbaTeams());
-
-    this.conferences$ = this.store.select($selectTeamConferences);
-    this.selectedConference$ = this.store.select($selectTeamSelectedConference);
-    this.selectedDivision$ = this.store.select($selectTeamSelectedDivision);
-    this.divisions = this.store.select($selectTeamDivisions);
-    this.selectedTeam$ = this.store.select($selectTeamSelectedTeam);
-    this.teams = this.store.select($selectTeamDropdownTeams);
-  }
-
   TeamDropdownSelectionChanged(event: Team): void {
     this.store.dispatch(
       µTeamDropdownSelectionChanged({ cfgs: { team: event } })

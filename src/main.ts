@@ -7,7 +7,6 @@ import { provideEffects } from '@ngrx/effects';
 import { provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { AppComponent } from './app/app.component';
-import { DashboardComponent } from './app/components/dashboard/dashboard.component';
 import { DashboardEffects } from './app/components/dashboard/index.effects';
 import { dashboardReducer } from './app/components/dashboard/index.reducer';
 import { GamesResultsEffects } from './app/components/games-results/index.effects';
@@ -16,6 +15,8 @@ import { SelectTeamEffects } from './app/components/select-team/index.effects';
 import { selectTeamReducer } from './app/components/select-team/index.reducer';
 import { TeamCardEffects } from './app/components/team-card/index.effects';
 import { teamCardReducer } from './app/components/team-card/index.reducer';
+import { GamesResultsResolver } from './app/resolvers/games-results.resolver';
+import { DashboardResolver } from './app/resolvers/teams.resolver';
 import { provideRouterStore } from './app/standalone-ngrx';
 
 import { environment } from './environments/environment';
@@ -27,7 +28,13 @@ if (environment.production) {
 const routes: Route[] = [
   {
     path: '',
-    component: DashboardComponent,
+    loadComponent: () =>
+      import('./app/components/dashboard/dashboard.component').then(
+        (c) => c.DashboardComponent
+      ),
+    resolve: {
+      teams: DashboardResolver,
+    },
   },
   {
     path: 'results/:teamCode',
@@ -35,6 +42,9 @@ const routes: Route[] = [
       import('./app/components/games-results/games-results.component').then(
         (c) => c.GamesResultsComponent
       ),
+    resolve: {
+      teams: GamesResultsResolver,
+    },
   },
 ];
 
