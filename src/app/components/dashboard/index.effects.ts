@@ -113,7 +113,10 @@ export class DashboardEffects {
                     logoBaseUrl,
                   });
                   return µDashboardSelectedDaysChangedSuccessEvent({
-                    cfgs: { gameResults: newGameResult },
+                    cfgs: {
+                      gameResults: newGameResult,
+                      currentgamesResultsUuid: gameResult.uuid,
+                    },
                   });
                 }),
                 catchError((error) =>
@@ -122,7 +125,7 @@ export class DashboardEffects {
               );
           })
       ),
-      mergeAll() // Flattens the nested observable
+      mergeAll()
     )
   );
 }

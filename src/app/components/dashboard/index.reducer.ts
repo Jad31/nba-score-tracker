@@ -41,8 +41,14 @@ export const dashboardReducer = createReducer(
     (state, { cfgs }): DashboardState =>
       produce(state, (draft) => {
         // update the gamesResults games that match the team_id
+        // draft.gamesResults = draft.gamesResults.map((gameResult) => {
+        //   if (gameResult.team_name === cfgs.gameResults.team_name) {
+        //     return cfgs.gameResults;
+        //   }
+        //   return gameResult;
+        // });
         draft.gamesResults = draft.gamesResults.map((gameResult) => {
-          if (gameResult.team_name === cfgs.gameResults.team_name) {
+          if (gameResult.uuid === cfgs.currentgamesResultsUuid) {
             return cfgs.gameResults;
           }
           return gameResult;

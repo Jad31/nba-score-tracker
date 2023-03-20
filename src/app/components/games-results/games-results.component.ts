@@ -39,7 +39,6 @@ export class GamesResultsComponent {
         tap(({ teams: { gamesResult, concurrent, teamCode } }) => {
           this.gameResults = gamesResult;
           this.concurrentTeams = concurrent;
-          this.teamCode = teamCode;
         })
       )
       .subscribe();

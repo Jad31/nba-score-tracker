@@ -37,7 +37,6 @@ export function retrieveNbaGameResult({
     team_id: team.id,
     team,
   };
-
   let totalPointsScored = 0;
   let totalPointsConceded = 0;
 
