@@ -21,7 +21,7 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('.content span')?.textContent).toContain(
-      'angular-training-certification-lvl2 app is running!'
+      'nba-score-tracker app is running!'
     );
   });
 });
